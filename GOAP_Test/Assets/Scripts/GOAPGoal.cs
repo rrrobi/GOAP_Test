@@ -2,17 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GOAPGoal : MonoBehaviour
+public interface IGoal
 {
-    // Start is called before the first frame update
-    void Start()
+    bool CanRun();
+    int CalculatePriority();
+}
+
+public class GOAPGoal : IGoal
+{
+    private HashSet<KeyValuePair<string, object>> preconditions;
+    private HashSet<KeyValuePair<string, object>> effects;
+
+    public string GoalName { get; protected set; }
+    public Agent Agent { get; protected set; }
+
+    // OnTick() - Do we need to adjust a Goal's Data over time?
+    // Activate()
+    // Deactivate()
+
+    public GOAPGoal(string goalName, Agent agent)
     {
-        
+        GoalName = goalName;
+        Agent = agent;
+    }
+     
+    public virtual bool CanRun()
+    {
+        return false;
+    }
+    public virtual int CalculatePriority()
+    {
+        return -1;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
