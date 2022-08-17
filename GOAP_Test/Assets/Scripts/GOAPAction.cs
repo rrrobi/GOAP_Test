@@ -20,13 +20,13 @@ public abstract class GOAPAction : MonoBehaviour
 		effects = new HashSet<KeyValuePair<string, object>>();
 	}
 
-	public void doReset()
+	public void DoReset()
 	{
 		inRange = false;
 		target = null;
 		_Reset();
 	}
-	public abstract void _Reset();
+	protected abstract void _Reset();
     public abstract bool IsDone();
     public abstract bool CheckSpecificPrecondition(Agent agent);
     public abstract bool Perform(Agent agent);

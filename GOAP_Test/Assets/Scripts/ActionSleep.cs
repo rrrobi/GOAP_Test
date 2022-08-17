@@ -11,7 +11,7 @@ public class ActionSleep : GOAPAction
 		Cost = 100f;// Cost isdetermined by..... what exactly? its a guess right now
 	}
 
-	public override void _Reset()
+	protected override void _Reset()
     {
 		isRested = false;
     }

@@ -22,6 +22,7 @@ public class Agent : MonoBehaviour
     List<GOAPGoal> Goals = new List<GOAPGoal>();
     GOAPGoal currentGoal = null;
 
+    public GameObject currentTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -118,20 +119,45 @@ public class Agent : MonoBehaviour
     {
         GOAPAction nextAction = currentActions.Peek();
         // Do we need to move towards site for action
-
-        // Else, do the action
-        nextAction = currentActions.Dequeue();
-        if (!nextAction.IsDone())
-            nextAction.Perform(this);
-
-        // Was that the last Action in the queue?
-        if (currentActions.Count == 0)
+        if (nextAction.RequiresInRange() && !nextAction.IsInRange())
         {
-            // Deactivate Goal
-            currentGoal.OnGoalDeactivated();
-            // Set curentGoal to null
-            currentGoal = null;
+            if (currentTarget != nextAction.gameObject)
+                currentTarget = nextAction.gameObject;
+
+            // Move to Site
+            MoveToTarget(nextAction);
         }
+        // Else, do the action
+        else
+        {
+            nextAction = currentActions.Dequeue();
+            if (!nextAction.IsDone())
+                nextAction.Perform(this);
+
+            // Was that the last Action in the queue?
+            if (currentActions.Count == 0)
+            {
+                // Deactivate Goal
+                currentGoal.OnGoalDeactivated();
+                // Set curentGoal to null
+                currentGoal = null;
+            }
+        }                
+    }
+
+    void MoveToTarget(GOAPAction action)// We need the action, probably don't need to pass it though...
+    {
+        Vector3 agentPosition = transform.position;
+        Vector3 targetPosition = currentTarget.transform.position;
+
+        transform.position = Vector3.MoveTowards(agentPosition, targetPosition, 4.5f * Time.deltaTime);
+
+        // are we there yet? 
+        float dist = Vector3.Distance(transform.position, targetPosition);
+        if (dist < 0.5)
+            action.SetInRange(true);
+        else
+            action.SetInRange(false);
     }
 
     void GetAvailableActions()

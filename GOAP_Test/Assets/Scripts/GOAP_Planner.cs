@@ -15,7 +15,7 @@ public static class GOAP_Planner
         foreach (var action in availableActions)
         {
             // Reset each action, to ensure we do not have setting from previous use
-            action._Reset();
+            action.DoReset();
             // Is action possible?
             if (action.CheckSpecificPrecondition(agent))
                 possibleActions.Add(action);

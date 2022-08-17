@@ -17,7 +17,7 @@ public class ActionGetFood : GOAPAction
         
     }
 
-    public override void _Reset()
+    protected override void _Reset()
     {
         isFoodRestocked = false;
     }

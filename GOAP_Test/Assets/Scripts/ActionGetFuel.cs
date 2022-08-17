@@ -17,7 +17,7 @@ public class ActionGetFuel : GOAPAction
 
     }
 
-    public override void _Reset()
+    protected override void _Reset()
     {
         isFuelRestocked = false;
     }
