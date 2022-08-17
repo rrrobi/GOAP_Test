@@ -32,7 +32,7 @@ public class ActionGetFood : GOAPAction
     }
     public override bool Perform(Agent agent)
     {
-        // Todo... Sleep in the bed
+        // Todo... pick up the fuel
         agent.CurrentFood = 10;
         isFoodRestocked = true;
         return true;
