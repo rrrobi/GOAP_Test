@@ -20,5 +20,13 @@ public class Goal_GetFood : GOAPGoal
     {
         return Mathf.Max((targetFoodCount - Agent.CurrentFood), 0) * 10;
     }
-    
+    public override void OnGoalActivated()
+    {
+        Agent.CurrentFood += 4; // temp
+    }
+    public override void OnGoalDeactivated()
+    {
+
+    }
+
 }

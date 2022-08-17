@@ -65,11 +65,22 @@ public class Agent : MonoBehaviour
                 highestPriority = priority;
             }
         }
+        bool hasSetNewGoal = false;
         // if priorityGoal is not already current Goal, replace it
         if (priorityGoal != currentGoal)
         {
             Debug.Log($"{priorityGoal.GoalName} is now the current goal! Priority: {priorityGoal.CalculatePriority()}");
+            currentGoal.OnGoalDeactivated();
             currentGoal = priorityGoal;
+            currentGoal.OnGoalActivated();
+            hasSetNewGoal = true;
+        }
+        if (!hasSetNewGoal)
+        {
+            // goal was set last frame, goal is done, 
+            // reset current goal to null
+            currentGoal.OnGoalDeactivated();
+            currentGoal = null;
         }
 
     }

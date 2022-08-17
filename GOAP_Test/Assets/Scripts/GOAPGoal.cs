@@ -6,6 +6,8 @@ public interface IGoal
 {
     bool CanRun();
     int CalculatePriority();
+    void OnGoalActivated();
+    void OnGoalDeactivated();
 }
 
 public class GOAPGoal : IGoal
@@ -33,6 +35,14 @@ public class GOAPGoal : IGoal
     public virtual int CalculatePriority()
     {
         return -1;
+    }
+    public virtual void OnGoalActivated()
+    {
+
+    }
+    public virtual void OnGoalDeactivated()
+    {
+
     }
 
 }

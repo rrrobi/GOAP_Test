@@ -20,4 +20,12 @@ public class Goal_GetFuel : GOAPGoal
     {
         return Mathf.Max((targetFuelCount - Agent.CurrentFood), 0) * 10;
     }
+    public override void OnGoalActivated()
+    {
+        Agent.CurrentFuel += 4; // Temp
+    }
+    public override void OnGoalDeactivated()
+    {
+
+    }
 }
