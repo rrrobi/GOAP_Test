@@ -8,7 +8,7 @@ public class ActionSleep : GOAPAction
 	public ActionSleep()
 	{
 		addEffect("IsRested", true);
-		Cost = 100f;// Cost isdetermined by..... what exactly? its a guess right now
+		BaseCost = Cost = 100f;// Cost isdetermined by..... what exactly? its a guess right now
 	}
 
 	protected override void _Reset()

@@ -10,6 +10,7 @@ public class ActionGetFood : GOAPAction
     void Start()
     {
         addEffect("FoodStocked", true);
+        BaseCost = Cost = 15f;
     }
     // Update is called once per frame
     void Update()

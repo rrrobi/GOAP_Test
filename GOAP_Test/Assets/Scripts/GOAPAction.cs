@@ -11,7 +11,9 @@ public abstract class GOAPAction : MonoBehaviour
 
     private bool inRange = false;
 
-    public float Cost = 1f;
+	protected float CostPerUnitDistance = 0.1f;
+	protected float BaseCost = 1f;
+	public float Cost = 1f;
     public GameObject target; // Not sure about GameObject...
 
     void Awake()
@@ -33,6 +35,7 @@ public abstract class GOAPAction : MonoBehaviour
     public abstract bool RequiresInRange();
     public bool IsInRange() { return inRange; }
     public void SetInRange(bool inRange) { this.inRange = inRange;}
+	public float GetCostWithDistance(float dist) { return Cost + (dist * CostPerUnitDistance); }
     public void AddPrecondition(string key, object value)
     {
         preconditions.Add(new KeyValuePair<string, object>(key, value));

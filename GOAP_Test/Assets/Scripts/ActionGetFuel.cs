@@ -10,6 +10,7 @@ public class ActionGetFuel : GOAPAction
     void Start()
     {
         addEffect("FuelStocked", true);
+        BaseCost = Cost = 15f;
     }
     // Update is called once per frame
     void Update()
