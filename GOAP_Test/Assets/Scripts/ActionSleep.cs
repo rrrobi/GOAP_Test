@@ -17,14 +17,15 @@ public class ActionSleep : GOAPAction
     }
 	public override bool IsDone() { return isRested; }
 	public override bool RequiresInRange() { return true; }
-	public override bool CheckPrecondition(GameObject Agent)
-    {
+	public override bool CheckSpecificPrecondition(Agent agent)
+	{
 		// Todo.. Is the agent Tired?
 		return false;
     }
-	public override bool Perform(GameObject Agent)
+	public override bool Perform(Agent agent)
     {
 		// Todo... Sleep in the bed
+		isRested = true;
 		return false;
     }
 	

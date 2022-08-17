@@ -9,7 +9,7 @@ public class Goal_GetFood : GOAPGoal
     public Goal_GetFood(string goalName, Agent agent)
         : base(goalName, agent)
     {
-
+        addGoalState("FoodStocked", true);
     }
 
     public override bool CanRun()
@@ -22,7 +22,7 @@ public class Goal_GetFood : GOAPGoal
     }
     public override void OnGoalActivated()
     {
-        Agent.CurrentFood += 4; // temp
+        //Agent.CurrentFood += 4; // temp
     }
     public override void OnGoalDeactivated()
     {

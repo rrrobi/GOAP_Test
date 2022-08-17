@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GOAPAction //: MonoBehaviour
+public abstract class GOAPAction : MonoBehaviour
 {
 	// Preconditions - list or hashset
 	// Effects - list or hashset
@@ -14,8 +14,8 @@ public abstract class GOAPAction //: MonoBehaviour
     public float Cost = 1f;
     public GameObject target; // Not sure about GameObject...
 
-	public GOAPAction()
-	{
+    void Awake()
+    {
 		preconditions = new HashSet<KeyValuePair<string, object>>();
 		effects = new HashSet<KeyValuePair<string, object>>();
 	}
@@ -28,8 +28,8 @@ public abstract class GOAPAction //: MonoBehaviour
 	}
 	public abstract void _Reset();
     public abstract bool IsDone();
-    public abstract bool CheckPrecondition(GameObject Agent);
-    public abstract bool Perform(GameObject Agent);
+    public abstract bool CheckSpecificPrecondition(Agent agent);
+    public abstract bool Perform(Agent agent);
     public abstract bool RequiresInRange();
     public bool IsInRange() { return inRange; }
     public void SetInRange(bool inRange) { this.inRange = inRange;}

@@ -12,15 +12,12 @@ public interface IGoal
 
 public class GOAPGoal : IGoal
 {
-    private HashSet<KeyValuePair<string, object>> preconditions;
-    private HashSet<KeyValuePair<string, object>> effects;
+    private HashSet<KeyValuePair<string, object>> goalState = new HashSet<KeyValuePair<string, object>>();
 
     public string GoalName { get; protected set; }
     public Agent Agent { get; protected set; }
 
     // OnTick() - Do we need to adjust a Goal's Data over time?
-    // Activate()
-    // Deactivate()
 
     public GOAPGoal(string goalName, Agent agent)
     {
@@ -45,4 +42,32 @@ public class GOAPGoal : IGoal
 
     }
 
+    public void addGoalState(string key, object value)
+    {
+        goalState.Add(new KeyValuePair<string, object>(key, value));
+    }
+
+    public void removeGoalState(string key)
+    {
+        KeyValuePair<string, object> remove = default(KeyValuePair<string, object>);
+        foreach (KeyValuePair<string, object> kvp in goalState)
+        {
+            if (kvp.Key.Equals(key))
+            {
+                remove = kvp;
+            }
+            if (!default(KeyValuePair<string, object>).Equals(remove))
+            {
+                goalState.Remove(remove);
+            }
+        }
+    }
+
+    public HashSet<KeyValuePair<string, object>> GoalState
+    {
+        get
+        {
+            return goalState;
+        }
+    }
 }

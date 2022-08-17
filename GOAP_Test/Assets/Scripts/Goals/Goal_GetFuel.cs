@@ -9,7 +9,7 @@ public class Goal_GetFuel : GOAPGoal
     public Goal_GetFuel(string goalName, Agent agent)
         : base(goalName, agent)
     {
-
+        addGoalState("FuelStocked", true);
     }
 
     public override bool CanRun()
@@ -18,11 +18,11 @@ public class Goal_GetFuel : GOAPGoal
     }
     public override int CalculatePriority()
     {
-        return Mathf.Max((targetFuelCount - Agent.CurrentFood), 0) * 10;
+        return Mathf.Max((targetFuelCount - Agent.CurrentFuel), 0) * 10;
     }
     public override void OnGoalActivated()
     {
-        Agent.CurrentFuel += 4; // Temp
+        //Agent.CurrentFuel += 4; // Temp
     }
     public override void OnGoalDeactivated()
     {

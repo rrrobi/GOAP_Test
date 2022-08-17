@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Goal_Idle : GOAPGoal
 {
-    int priority = 10;
+    int priority = 35;
     public Goal_Idle(string goalName, Agent agent)
         : base(goalName, agent)
     {
