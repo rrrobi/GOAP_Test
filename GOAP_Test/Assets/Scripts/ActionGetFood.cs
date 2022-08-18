@@ -10,6 +10,7 @@ public class ActionGetFood : GOAPAction
     void Start()
     {
         addEffect("FoodStocked", true);
+        AddPrecondition("HasFoodBasket", true);
         BaseCost = Cost = 15f;
     }
     // Update is called once per frame
@@ -33,8 +34,9 @@ public class ActionGetFood : GOAPAction
     }
     public override bool Perform(Agent agent)
     {
-        // Todo... pick up the fuel
+        // pick up the food
         agent.CurrentFood = 10;
+        agent.removeCurrentState("HasFoodBasket"); // bad way of doing this, but will do for the prototype
         isFoodRestocked = true;
         return true;
     }

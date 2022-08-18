@@ -17,6 +17,37 @@ public class Agent : MonoBehaviour
     public int CurrentFuel = 10;
     public int Energy;
 
+    // de-facto Blackboard
+    ////////////////////////////////////////////////////////////////////////
+    private HashSet<KeyValuePair<string, object>> currentState = new HashSet<KeyValuePair<string, object>>();
+    public void addCurrentState(string key, object value)
+    {
+        currentState.Add(new KeyValuePair<string, object>(key, value));
+    }
+    public void removeCurrentState(string key)
+    {
+        KeyValuePair<string, object> remove = default(KeyValuePair<string, object>);
+        foreach (KeyValuePair<string, object> kvp in currentState)
+        {
+            if (kvp.Key.Equals(key))
+            {
+                remove = kvp;
+            }            
+        }
+        if (!default(KeyValuePair<string, object>).Equals(remove))
+        {
+            currentState.Remove(remove);
+        }
+    }
+    public HashSet<KeyValuePair<string, object>> CurrentState
+    {
+        get
+        {
+            return currentState;
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////
+
     private HashSet<GOAPAction> availableActions = new HashSet<GOAPAction>();
     private Queue<GOAPAction> currentActions = new Queue<GOAPAction>();
     List<GOAPGoal> Goals = new List<GOAPGoal>();
@@ -70,7 +101,8 @@ public class Agent : MonoBehaviour
         if (decisionTimer < 0) // only look at making a new decision ever second... for now
         {
             decisionTimer = 1;
-            
+            // Update 'CurrentState'
+            UpdateCurrentState();
 
             // Update Priorities, get highest priority
             int highestPriority = -1;
@@ -86,7 +118,7 @@ public class Agent : MonoBehaviour
                     highestPriority = priority;
                 }
             }
-            bool hasSetNewGoal = false;
+
             // if priorityGoal is not already current Goal, replace it
             if (priorityGoal != currentGoal)
             {
@@ -95,23 +127,16 @@ public class Agent : MonoBehaviour
                     currentGoal.OnGoalDeactivated();
                 currentGoal = priorityGoal;
                 currentGoal.OnGoalActivated();
-                hasSetNewGoal = true;
 
                 // Find plan for new goal
                 GetAvailableActions();
                 currentActions.Clear();
-                GOAPAction action = GOAP_Planner.Plan(this, availableActions, currentGoal.GoalState);
-                if (action != null)
-                    currentActions.Enqueue(action);
+                currentActions = GOAP_Planner.Plan(this, availableActions, currentGoal.GoalState, currentState);
+                //GOAPAction action = GOAP_Planner.SimplePlan(this, availableActions, currentGoal.GoalState);
+                //if (action != null)
+                //    currentActions.Enqueue(action);
             }
 
-            //if (!hasSetNewGoal)
-            //{
-            //    // goal was set last frame, goal is done, 
-            //    // reset current goal to null
-            //    currentGoal.OnGoalDeactivated();
-            //    currentGoal = null;
-            //}
         }
     }
 
@@ -167,6 +192,39 @@ public class Agent : MonoBehaviour
         {
             availableActions.Add(action);
         }
+    }
+
+    void UpdateCurrentState()
+    {
+        // Remove states no longer applicable
+        List<string> statesToRemove = new List<string>();
+        foreach (var kvp in currentState)
+        {
+            switch (kvp.Key)
+            {
+                case "FoodStocked":
+                    if (CurrentFood < 10)
+                        statesToRemove.Add("FoodStocked");
+                    break;
+                case "FuelStocked":
+                    if (CurrentFuel < 10)
+                        statesToRemove.Add("FuelStocked");
+                    break;
+                case "IsIdle":
+                    // ignore it, not important for this prototype
+                    break;
+            }
+        }
+        foreach (var state in statesToRemove)
+        {
+            removeCurrentState(state);
+        }
+
+        // Add states we need
+        if (CurrentFood >= 10)
+            addCurrentState("FoodStocked", true);
+        if (CurrentFuel >= 10)
+            addCurrentState("FuelStocked", true);
     }
 
 }

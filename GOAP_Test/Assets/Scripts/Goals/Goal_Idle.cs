@@ -8,7 +8,7 @@ public class Goal_Idle : GOAPGoal
     public Goal_Idle(string goalName, Agent agent)
         : base(goalName, agent)
     {
-
+        addGoalState("IsIdle", true);
     }
 
     public override bool CanRun()
