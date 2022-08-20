@@ -16,23 +16,43 @@ public abstract class GOAPAction : MonoBehaviour
 	public float Cost = 1f;
     public GameObject target; // Not sure about GameObject...
 
+	protected float actionTime;
+
     void Awake()
     {
 		preconditions = new HashSet<KeyValuePair<string, object>>();
 		effects = new HashSet<KeyValuePair<string, object>>();
+		ResetActionTime();
 	}
 
 	public void DoReset()
 	{
 		inRange = false;
 		target = null;
+		ResetActionTime();
 		_Reset();
 	}
 	protected abstract void _Reset();
+	protected abstract void ResetActionTime();
     public abstract bool IsDone();
     public abstract bool CheckSpecificPrecondition(Agent agent);
-    public abstract bool Perform(Agent agent);
+    //public abstract bool Perform(Agent agent);
     public abstract bool RequiresInRange();
+	protected abstract bool OnComplete(Agent agent);
+	/// <summary>
+	/// Returns True if work this frame completes the action, else return false
+	/// </summary>
+	/// <param name="agent"></param>
+	/// <returns></returns>
+	public bool DoWork(Agent agent)
+    {
+		actionTime -= Time.deltaTime;
+
+		if (actionTime <= 0)        			
+			return OnComplete(agent);
+    
+		return false;
+    }
     public bool IsInRange() { return inRange; }
     public void SetInRange(bool inRange) { this.inRange = inRange;}
 	public float GetCostWithDistance(float dist) { return Cost + (dist * CostPerUnitDistance); }

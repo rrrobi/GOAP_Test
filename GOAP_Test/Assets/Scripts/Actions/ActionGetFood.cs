@@ -11,7 +11,7 @@ public class ActionGetFood : GOAPAction
     {
         addEffect("FoodStocked", true);
         AddPrecondition("HasFoodBasket", true);
-        BaseCost = Cost = 15f;
+        BaseCost = Cost = 15f;        
     }
     // Update is called once per frame
     void Update()
@@ -23,6 +23,10 @@ public class ActionGetFood : GOAPAction
     {
         isFoodRestocked = false;
     }
+    protected override void ResetActionTime()
+    {
+        actionTime = 1;
+    }
     public override bool IsDone() { return isFoodRestocked; }
     public override bool RequiresInRange() { return true; }
     public override bool CheckSpecificPrecondition(Agent agent)
@@ -32,7 +36,15 @@ public class ActionGetFood : GOAPAction
             return true;
         return false;
     }
-    public override bool Perform(Agent agent)
+    //public override bool Perform(Agent agent)
+    //{
+    //    // pick up the food
+    //    agent.CurrentFood = 10;
+    //    agent.removeCurrentState("HasFoodBasket"); // bad way of doing this, but will do for the prototype
+    //    isFoodRestocked = true;
+    //    return true;
+    //}
+    protected override bool OnComplete(Agent agent)
     {
         // pick up the food
         agent.CurrentFood = 10;

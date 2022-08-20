@@ -15,6 +15,10 @@ public class ActionSleep : GOAPAction
     {
 		isRested = false;
     }
+	protected override void ResetActionTime()
+	{
+		actionTime = 1;
+	}
 	public override bool IsDone() { return isRested; }
 	public override bool RequiresInRange() { return true; }
 	public override bool CheckSpecificPrecondition(Agent agent)
@@ -22,11 +26,16 @@ public class ActionSleep : GOAPAction
 		// Todo.. Is the agent Tired?
 		return false;
     }
-	public override bool Perform(Agent agent)
-    {
-		// Todo... Sleep in the bed
+	//public override bool Perform(Agent agent)
+ //   {
+	//	// Todo... Sleep in the bed
+	//	isRested = true;
+	//	return false;
+ //   }
+	protected override bool OnComplete(Agent agent)
+	{
+		// Sleep in the bed
 		isRested = true;
 		return false;
-    }
-	
+	}
 }

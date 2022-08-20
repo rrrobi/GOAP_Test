@@ -21,6 +21,10 @@ public class ActionIdle : GOAPAction
     {
         isIdle = false;
     }
+    protected override void ResetActionTime()
+    {
+        actionTime = 0;
+    }
     public override bool IsDone() { return isIdle; }
     public override bool RequiresInRange() { return true; }
     public override bool CheckSpecificPrecondition(Agent agent)
@@ -28,7 +32,12 @@ public class ActionIdle : GOAPAction
         // why would we not be able to idle, so always return true
         return true;
     }
-    public override bool Perform(Agent agent)
+    //public override bool Perform(Agent agent)
+    //{
+    //    isIdle = true;
+    //    return true;
+    //}
+    protected override bool OnComplete(Agent agent)
     {
         isIdle = true;
         return true;

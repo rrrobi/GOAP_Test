@@ -22,6 +22,10 @@ public class ActionGetFoodBasket : GOAPAction
     {
         hasFoodBasket = false;
     }
+    protected override void ResetActionTime()
+    {
+        actionTime = 1;
+    }
     public override bool IsDone() { return hasFoodBasket; }
     public override bool RequiresInRange() { return true; }
     public override bool CheckSpecificPrecondition(Agent agent)
@@ -29,9 +33,16 @@ public class ActionGetFoodBasket : GOAPAction
         // Can always do this        
         return true;
     }
-    public override bool Perform(Agent agent)
+    //public override bool Perform(Agent agent)
+    //{
+    //    // Todo... pick up the food basket
+    //    agent.addCurrentState("HasFoodBasket", true);
+    //    hasFoodBasket = true;
+    //    return true;
+    //}
+    protected override bool OnComplete(Agent agent)
     {
-        // Todo... pick up the food basket
+        // Pick up the food basket
         agent.addCurrentState("HasFoodBasket", true);
         hasFoodBasket = true;
         return true;

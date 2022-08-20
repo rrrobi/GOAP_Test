@@ -155,9 +155,17 @@ public class Agent : MonoBehaviour
         // Else, do the action
         else
         {
-            nextAction = currentActions.Dequeue();
+            // We are close enough
+            // DoWork, will work through the actions's Time-To-Complete
+            // If this frames 'DoWork' completes the action, it will return true
             if (!nextAction.IsDone())
-                nextAction.Perform(this);
+                if (nextAction.DoWork(this))
+                    currentActions.Dequeue();
+
+
+            //nextAction = currentActions.Dequeue();
+            //if (!nextAction.IsDone())
+            //    nextAction.Perform(this);
 
             // Was that the last Action in the queue?
             if (currentActions.Count == 0)
