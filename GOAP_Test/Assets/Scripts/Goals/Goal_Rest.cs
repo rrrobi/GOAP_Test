@@ -4,19 +4,28 @@ using UnityEngine;
 
 public class Goal_Rest : GOAPGoal
 {
-    int priority = 10;
+    int priority = 30;
+    int targetEnergyvalue = 20;
     public Goal_Rest(string goalName, Agent agent)
         : base(goalName, agent)
     {
-
+        addGoalState("IsRested", true);
     }
 
     public override bool CanRun()
     {
-        return true;
+        return base.CanRun();
     }
     public override int CalculatePriority()
     {
-        return priority;
+        return Mathf.Max((targetEnergyvalue - Agent.CurrentEnergy), 0) * 5;
+    }
+    public override void OnGoalActivated()
+    {
+        
+    }
+    public override void OnGoalDeactivated()
+    {
+
     }
 }

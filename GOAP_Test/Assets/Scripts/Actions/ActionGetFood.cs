@@ -29,6 +29,7 @@ public class ActionGetFood : GOAPAction
     }
     public override bool IsDone() { return isFoodRestocked; }
     public override bool RequiresInRange() { return true; }
+    public override bool EffectsOverTime() { return false; }
     public override bool CheckSpecificPrecondition(Agent agent)
     {
         // Can we collect more food?
@@ -36,14 +37,6 @@ public class ActionGetFood : GOAPAction
             return true;
         return false;
     }
-    //public override bool Perform(Agent agent)
-    //{
-    //    // pick up the food
-    //    agent.CurrentFood = 10;
-    //    agent.removeCurrentState("HasFoodBasket"); // bad way of doing this, but will do for the prototype
-    //    isFoodRestocked = true;
-    //    return true;
-    //}
     protected override bool OnComplete(Agent agent)
     {
         // pick up the food

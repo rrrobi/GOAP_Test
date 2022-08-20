@@ -22,7 +22,7 @@ public class Goal_GetFood : GOAPGoal
     }
     public override void OnGoalActivated()
     {
-        //Agent.CurrentFood += 4; // temp
+       
     }
     public override void OnGoalDeactivated()
     {

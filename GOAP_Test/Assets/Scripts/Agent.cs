@@ -12,10 +12,12 @@ public class Agent : MonoBehaviour
     float foodTimer;
     float fuelBaseTimer = 5;
     float fuelTimer;
+    float energyBaseTimer = 1.5f;
+    float energyTimer;
 
     public int CurrentFood = 10;
     public int CurrentFuel = 10;
-    public int Energy;
+    public int CurrentEnergy = 20;
 
     // de-facto Blackboard
     ////////////////////////////////////////////////////////////////////////
@@ -68,8 +70,8 @@ public class Agent : MonoBehaviour
         Goals.Add(getFood);
         Goal_GetFuel getFuel = new Goal_GetFuel("Get_Fuel", this);
         Goals.Add(getFuel);
-        //Goal_Rest rest = new Goal_Rest("Rest", this);
-        //Goals.Add(rest);
+        Goal_Rest rest = new Goal_Rest("Rest", this);
+        Goals.Add(rest);
 
     }
 
@@ -77,6 +79,7 @@ public class Agent : MonoBehaviour
     {
         fuelTimer -= Time.deltaTime;
         foodTimer -= Time.deltaTime;
+        energyTimer -= Time.deltaTime;
         decisionTimer -= Time.deltaTime;
         if (foodTimer < 0)
         {
@@ -87,6 +90,11 @@ public class Agent : MonoBehaviour
         {
             CurrentFuel--;
             fuelTimer = fuelBaseTimer;
+        }
+        if (energyTimer < 0)
+        {
+            CurrentEnergy--;
+            energyTimer = energyBaseTimer;
         }
     }
 
@@ -132,9 +140,6 @@ public class Agent : MonoBehaviour
                 GetAvailableActions();
                 currentActions.Clear();
                 currentActions = GOAP_Planner.Plan(this, availableActions, currentGoal.GoalState, currentState);
-                //GOAPAction action = GOAP_Planner.SimplePlan(this, availableActions, currentGoal.GoalState);
-                //if (action != null)
-                //    currentActions.Enqueue(action);
             }
 
         }
@@ -161,11 +166,6 @@ public class Agent : MonoBehaviour
             if (!nextAction.IsDone())
                 if (nextAction.DoWork(this))
                     currentActions.Dequeue();
-
-
-            //nextAction = currentActions.Dequeue();
-            //if (!nextAction.IsDone())
-            //    nextAction.Perform(this);
 
             // Was that the last Action in the queue?
             if (currentActions.Count == 0)
@@ -218,6 +218,10 @@ public class Agent : MonoBehaviour
                     if (CurrentFuel < 10)
                         statesToRemove.Add("FuelStocked");
                     break;
+                case "IsRested":
+                    if (CurrentEnergy < 20)
+                        statesToRemove.Add("IsRested");
+                    break;
                 case "IsIdle":
                     // ignore it, not important for this prototype
                     break;
@@ -233,6 +237,8 @@ public class Agent : MonoBehaviour
             addCurrentState("FoodStocked", true);
         if (CurrentFuel >= 10)
             addCurrentState("FuelStocked", true);
+        if (CurrentEnergy >= 20)
+            addCurrentState("IsRested", true);
     }
 
 }

@@ -28,18 +28,12 @@ public class ActionGetFuelSack : GOAPAction
     }
     public override bool IsDone() { return hasFuelSack; }
     public override bool RequiresInRange() { return true; }
+    public override bool EffectsOverTime() { return false; }
     public override bool CheckSpecificPrecondition(Agent agent)
     {
         // Can always do this        
         return true;
     }
-    //public override bool Perform(Agent agent)
-    //{
-    //    // Todo... pick up the food basket
-    //    agent.addCurrentState("HasFuelSack", true);
-    //    hasFuelSack = true;
-    //    return true;
-    //}
     protected override bool OnComplete(Agent agent)
     {
         // Pick up the food basket

@@ -27,16 +27,12 @@ public class ActionIdle : GOAPAction
     }
     public override bool IsDone() { return isIdle; }
     public override bool RequiresInRange() { return true; }
+    public override bool EffectsOverTime() { return false; }
     public override bool CheckSpecificPrecondition(Agent agent)
     {
         // why would we not be able to idle, so always return true
         return true;
     }
-    //public override bool Perform(Agent agent)
-    //{
-    //    isIdle = true;
-    //    return true;
-    //}
     protected override bool OnComplete(Agent agent)
     {
         isIdle = true;

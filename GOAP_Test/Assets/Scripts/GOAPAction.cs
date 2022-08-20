@@ -36,8 +36,8 @@ public abstract class GOAPAction : MonoBehaviour
 	protected abstract void ResetActionTime();
     public abstract bool IsDone();
     public abstract bool CheckSpecificPrecondition(Agent agent);
-    //public abstract bool Perform(Agent agent);
     public abstract bool RequiresInRange();
+	public abstract bool EffectsOverTime();
 	protected abstract bool OnComplete(Agent agent);
 	/// <summary>
 	/// Returns True if work this frame completes the action, else return false

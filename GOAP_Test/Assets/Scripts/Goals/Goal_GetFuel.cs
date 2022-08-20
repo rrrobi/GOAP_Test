@@ -22,7 +22,7 @@ public class Goal_GetFuel : GOAPGoal
     }
     public override void OnGoalActivated()
     {
-        //Agent.CurrentFuel += 4; // Temp
+        
     }
     public override void OnGoalDeactivated()
     {

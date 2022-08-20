@@ -29,6 +29,7 @@ public class ActionGetFuel : GOAPAction
     }
     public override bool IsDone() { return isFuelRestocked; }
     public override bool RequiresInRange() { return true; }
+    public override bool EffectsOverTime() { return false; }
     public override bool CheckSpecificPrecondition(Agent agent)
     {
         // Can we collect more fuel?
@@ -36,14 +37,6 @@ public class ActionGetFuel : GOAPAction
             return true;
         return false;
     }
-    //public override bool Perform(Agent agent)
-    //{
-    //    // pick up the fuel
-    //    agent.CurrentFuel = 10;
-    //    agent.removeCurrentState("HasFuelSack"); // bad way of doing this, but will do for the prototype
-    //    isFuelRestocked = true;
-    //    return true;
-    //}
     protected override bool OnComplete(Agent agent)
     {
         // pick up the fuel
