@@ -18,14 +18,14 @@ public class Goal_GetFuel : GOAPGoal
     }
     public override int CalculatePriority()
     {
-        return Mathf.Max((targetFuelCount - Agent.CurrentFuel), 0) * 10;
+        return (Mathf.Max((targetFuelCount - Agent.CurrentFuel), 0) * 10) + activeGoalPriorityModifier;
     }
     public override void OnGoalActivated()
     {
-        
+        base.OnGoalActivated();
     }
     public override void OnGoalDeactivated()
     {
-
+        base.OnGoalDeactivated();
     }
 }

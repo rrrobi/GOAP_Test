@@ -17,6 +17,6 @@ public class Goal_Idle : GOAPGoal
     }
     public override int CalculatePriority()
     {
-        return priority;
+        return priority; // does not need to be modified by the activeGoalPriorityModifier
     }
 }

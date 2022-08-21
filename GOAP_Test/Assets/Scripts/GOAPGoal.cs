@@ -16,7 +16,8 @@ public class GOAPGoal : IGoal
 
     public string GoalName { get; protected set; }
     public Agent Agent { get; protected set; }
-
+    
+    protected int activeGoalPriorityModifier = 0;
     // OnTick() - Do we need to adjust a Goal's Data over time?
 
     public GOAPGoal(string goalName, Agent agent)
@@ -35,11 +36,11 @@ public class GOAPGoal : IGoal
     }
     public virtual void OnGoalActivated()
     {
-
+        activeGoalPriorityModifier = 10;
     }
     public virtual void OnGoalDeactivated()
     {
-
+        activeGoalPriorityModifier = 0;
     }
 
     public void addGoalState(string key, object value)

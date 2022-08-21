@@ -18,14 +18,14 @@ public class Goal_Rest : GOAPGoal
     }
     public override int CalculatePriority()
     {
-        return Mathf.Max((targetEnergyvalue - Agent.CurrentEnergy), 0) * 5;
+        return (Mathf.Max((targetEnergyvalue - Agent.CurrentEnergy), 0) * 5) + activeGoalPriorityModifier;
     }
     public override void OnGoalActivated()
     {
-        
+        base.OnGoalActivated();
     }
     public override void OnGoalDeactivated()
     {
-
+        base.OnGoalDeactivated();
     }
 }

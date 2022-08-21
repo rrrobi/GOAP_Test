@@ -18,15 +18,15 @@ public class Goal_GetFood : GOAPGoal
     }
     public override int CalculatePriority()
     {
-        return Mathf.Max((targetFoodCount - Agent.CurrentFood), 0) * 10;
+        return (Mathf.Max((targetFoodCount - Agent.CurrentFood), 0) * 10) + activeGoalPriorityModifier;
     }
     public override void OnGoalActivated()
     {
-       
+       base.OnGoalActivated();
     }
     public override void OnGoalDeactivated()
     {
-
+        base.OnGoalDeactivated();
     }
 
 }

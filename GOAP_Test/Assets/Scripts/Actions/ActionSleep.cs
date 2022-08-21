@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ActionSleep : GOAPAction
 {
+	int targetEnergy = 20; // this is a quick temp solution - would have a max value/ target value done properly, and probably in the agent class rather than here
+
+	private float intervalBase = 0.5f;
+	private float intervalTime;
 	private bool isRested = false;
 	void Start()
 	{
@@ -21,7 +25,8 @@ public class ActionSleep : GOAPAction
     }
 	protected override void ResetActionTime()
 	{
-		actionTime = 2;
+		actionTime = 5;
+		intervalTime = intervalBase;
 	}
 	public override bool IsDone() { return isRested; }
 	public override bool RequiresInRange() { return true; }
@@ -34,8 +39,29 @@ public class ActionSleep : GOAPAction
 	protected override bool OnComplete(Agent agent)
 	{
 		// pick up the food
-		agent.CurrentEnergy = 20;
+		//agent.CurrentEnergy = 20;
 		isRested = true;
 		return true;
+	}
+	/// <summary>
+	/// Returns True if work this frame completes the action, else return false. ONLY overridden by EffectOverTime actions
+	/// </summary>
+	/// <param name="agent"></param>
+	/// <returns></returns>
+	public override bool DoWork(Agent agent)
+	{
+		actionTime -= Time.deltaTime;
+		intervalTime -= Time.deltaTime;
+
+		if (intervalTime <= 0)
+		{
+			agent.CurrentEnergy++;
+			intervalTime = intervalBase;
+		}
+
+		if (actionTime <= 0 || agent.CurrentEnergy >= targetEnergy)
+			return OnComplete(agent);
+
+		return false;
 	}
 }

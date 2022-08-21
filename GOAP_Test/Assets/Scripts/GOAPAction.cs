@@ -40,11 +40,11 @@ public abstract class GOAPAction : MonoBehaviour
 	public abstract bool EffectsOverTime();
 	protected abstract bool OnComplete(Agent agent);
 	/// <summary>
-	/// Returns True if work this frame completes the action, else return false
+	/// Returns True if work this frame completes the action, else return false. ONLY overridden by EffectOverTime actions
 	/// </summary>
 	/// <param name="agent"></param>
 	/// <returns></returns>
-	public bool DoWork(Agent agent)
+	public virtual bool DoWork(Agent agent)
     {
 		actionTime -= Time.deltaTime;
 

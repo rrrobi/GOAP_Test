@@ -8,11 +8,11 @@ public class Agent : MonoBehaviour
 
     float decisionTimer = 1;
 
-    float foodBaseTimer = 2;
+    float foodBaseTimer = 3;
     float foodTimer;
     float fuelBaseTimer = 5;
     float fuelTimer;
-    float energyBaseTimer = 1.5f;
+    float energyBaseTimer = 2f;
     float energyTimer;
 
     public int CurrentFood = 10;
